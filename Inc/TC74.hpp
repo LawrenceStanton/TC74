@@ -36,6 +36,8 @@ public:
 
 		virtual optional<Register> read(MemoryAddress address) noexcept					= 0;
 		virtual optional<Register> write(MemoryAddress address, Register data) noexcept = 0;
+
+		virtual ~I2C() noexcept = default;
 	};
 	using Register		= I2C::Register;
 	using DeviceAddress = I2C::DeviceAddress;
