@@ -1,5 +1,9 @@
 # TC74 Temperature Sensor Driver
 
+[![Licence](https://img.shields.io/github/license/LawrenceStanton/TC74?label=Licence)](LICENCE.md)
+[![CodeQL](https://github.com/LawrenceStanton/TC74/actions/workflows/codeql.yml/badge.svg)](https://github.com/LawrenceStanton/TC74/actions/workflows/codeql.yml)
+[![CTest](https://github.com/LawrenceStanton/TC74/actions/workflows/ctest.yml/badge.svg)](https://github.com/LawrenceStanton/TC74/actions/workflows/ctest.yml)
+
 ## Overview
 
 The TC74 is a digital embedded temperature sensor. It is capable of reading temperatures from -0°C to +125°C. The TC74 communicates over I2C. This driver provides a simple C++ object oriented driver for interfacing with the TC74, and is agnostic to any embedded platform.
@@ -7,7 +11,6 @@ The TC74 is a digital embedded temperature sensor. It is capable of reading temp
 ## How to Use
 
 ## Use as Git Submodule
-
 
 1. Add this project as a `git submodule`.
 
@@ -40,6 +43,7 @@ The TC74 is a digital embedded temperature sensor. It is capable of reading temp
 ## Design Patterns
 
 This driver follows a strategy design pattern with regards to the I2C interface. The driver defines a I2C interface (`TC74::I2C`). The user must then provide a concrete implementation of this interface, and provide it to the driver class via dependency injection in the constructor.
+
 ```mermaid
 classDiagram
 direction RL
