@@ -1,6 +1,7 @@
 # TC74 Temperature Sensor Driver
 
 [![Licence](https://img.shields.io/github/license/LawrenceStanton/TC74?label=Licence)](LICENCE.md)
+![latest tag](https://img.shields.io/github/v/tag/lawrencestanton/TC74?color=brightgreen&label=Tag)
 [![CodeQL](https://github.com/LawrenceStanton/TC74/actions/workflows/codeql.yml/badge.svg)](https://github.com/LawrenceStanton/TC74/actions/workflows/codeql.yml)
 [![CTest](https://github.com/LawrenceStanton/TC74/actions/workflows/ctest.yml/badge.svg)](https://github.com/LawrenceStanton/TC74/actions/workflows/ctest.yml)
 
