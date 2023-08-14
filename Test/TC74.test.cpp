@@ -23,6 +23,10 @@ using std::nullopt;
 using MemoryAddress = TC74::I2C::MemoryAddress;
 using Register		= TC74::I2C::Register;
 
+using Config		= TC74::Config;
+using StandbySwitch = Config::StandbySwitch;
+using DataReady		= Config::DataReady;
+
 class MockI2C : public TC74::I2C {
 public:
 	MOCK_METHOD(optional<Register>, read, (MemoryAddress), (noexcept, override, final));
@@ -47,10 +51,6 @@ TEST_F(TC74_Test, constructorAssignsI2cReference) {
 }
 
 TEST_F(TC74_Test, readConfigNormallyReturnsConfig) {
-	using Config		= TC74::Config;
-	using StandbySwitch = Config::StandbySwitch;
-	using DataReady		= Config::DataReady;
-
 	const std::map<Register, Config> configExpectedReturnValues = {
 		{0x00u, Config{StandbySwitch::NORMAL, DataReady::NOT_READY}},
 		{0x40u, Config{StandbySwitch::NORMAL, DataReady::READY}},
@@ -72,6 +72,28 @@ TEST_F(TC74_Test, readConfigNormallyReturnsConfig) {
 TEST_F(TC74_Test, readConfigReturnsNulloptIfI2CReadFails) {
 	disableI2C();
 	EXPECT_EQ(tc74.readConfig(), nullopt);
+}
+
+TEST_F(TC74_Test, writeConfigNormallyReturnsConfigRegister) {
+	auto expectedConfig = std::map<Register, Config>{
+		{Register(0x00u), Config{StandbySwitch::NORMAL}}, //
+		{Register(0x80u), Config{StandbySwitch::STANDBY}}};
+
+	for (auto &config : expectedConfig) {
+		EXPECT_CALL(i2c, write(Eq(MemoryAddress::CONFIG), Eq(config.first))).WillOnce(ReturnArg<1>());
+		auto transmission = tc74.writeConfig(config.second);
+
+		EXPECT_TRUE(transmission.has_value());
+
+		auto configRegister = *transmission;
+		EXPECT_EQ(configRegister, config.first);
+	}
+}
+
+TEST_F(TC74_Test, writeConfigReturnsNulloptIfI2CWriteFails) {
+	disableI2C();
+	EXPECT_EQ(tc74.writeConfig(Config{StandbySwitch::NORMAL}), nullopt);
+	EXPECT_EQ(tc74.writeConfig(Config{StandbySwitch::STANDBY}), nullopt);
 }
 
 TEST_F(TC74_Test, readTemperatureNormallyReturnsTemperature) {
@@ -106,10 +128,6 @@ TEST_F(TC74_Test, readTemperatureReturnsNulloptIfI2CReadFails) {
 }
 
 TEST(TC74_ConfigTest, registerOperatorReturnsRegisterValue) {
-	using Config		= TC74::Config;
-	using StandbySwitch = Config::StandbySwitch;
-	using DataReady		= Config::DataReady;
-
 	const std::map<Config, Register> configExpectedReturnValues = {
 		{Config{StandbySwitch::NORMAL, DataReady::NOT_READY}, Register(0x00u)},
 		{Config{StandbySwitch::NORMAL, DataReady::READY}, Register(0x40u)},

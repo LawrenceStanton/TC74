@@ -4,6 +4,8 @@
  * @brief			: TC74 I2C Temperature Sensor Driver
  * @author			: Lawrence Stanton
  ******************************************************************************
+ * Datasheet Reference:
+ * https://ww1.microchip.com/downloads/aemDocuments/documents/APID/ProductDocuments/DataSheets/21462D.pdf
  */
 
 #pragma once
@@ -127,6 +129,15 @@ public:
 	 * @return The TC74 Config, if successful. Otherwise, nullopt.
 	 */
 	optional<Config> readConfig(void) const noexcept;
+
+	/**
+	 * @brief Write to the TC74 configuration register.
+	 *
+	 * @param config The TC74 Config to write.
+	 * @return The register written, if successful. Otherwise, nullopt.
+	 * @note This function does not filter on read-only bits when generating the binary representation.
+	 */
+	optional<Register> writeConfig(Config config) const noexcept;
 
 	/**
 	 * @brief Read the TC74 temperature.

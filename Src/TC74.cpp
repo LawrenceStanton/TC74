@@ -20,6 +20,15 @@ std::optional<TC74::Config> TC74::readConfig(void) const noexcept {
 	return Config(*transmission);
 }
 
+optional<TC74::Register> TC74::writeConfig(Config config) const noexcept {
+	Register reg = config;
+
+	auto transmission = this->i2c.write(MemoryAddress::CONFIG, reg);
+
+	if (!transmission) return nullopt;
+	else return reg;
+}
+
 optional<int8_t> TC74::readTemperature(void) const noexcept {
 	auto transmission = this->i2c.read(MemoryAddress::TEMP);
 
