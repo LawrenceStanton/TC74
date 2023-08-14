@@ -27,11 +27,13 @@ class MockI2C : public TC74::I2C {
 public:
 	MOCK_METHOD(optional<Register>, read, (MemoryAddress), (noexcept, override, final));
 	MOCK_METHOD(optional<Register>, write, (MemoryAddress, Register), (noexcept, override, final));
+
+	MockI2C(TC74::I2C::DeviceAddress deviceAddress) noexcept : I2C(deviceAddress) {}
 };
 
 class TC74_Test : public ::testing::Test {
 public:
-	MockI2C i2c{};
+	MockI2C i2c{TC74::I2C::DeviceAddress::A0};
 	TC74	tc74{i2c};
 
 	inline void disableI2C(void) const noexcept {

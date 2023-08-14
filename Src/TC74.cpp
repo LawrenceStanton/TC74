@@ -42,3 +42,5 @@ TC74::Config::Config(Register rwcr) noexcept
 TC74::Config::operator Register() const noexcept {
 	return static_cast<Register>(standbySwitch) | static_cast<Register>(dataReady);
 }
+
+TC74::I2C::I2C(DeviceAddress deviceAddress) noexcept : deviceAddress(deviceAddress) {}
