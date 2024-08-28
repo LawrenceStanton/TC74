@@ -2,6 +2,11 @@ cmake_minimum_required(VERSION 3.22...3.27)
 
 project(TC74)
 
+# Set build directory
+if(NOT CMAKE_RUNTIME_OUTPUT_DIRECTORY)
+  set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/Build)
+endif()
+
 set(LIBRARY ${PROJECT_NAME})
 
 enable_language(CXX)
