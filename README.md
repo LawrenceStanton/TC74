@@ -7,11 +7,11 @@
 
 ## Overview
 
-The TC74 is a digital embedded temperature sensor. It is capable of reading temperatures from -0°C to +125°C. The TC74 communicates over I2C. This driver provides a simple C++ object oriented driver for interfacing with the TC74, and is agnostic to any embedded platform.
+The TC74 is an I2C digital embedded temperature sensor, capable of reading temperatures from -0°C to +125°C. This driver provides a simple C++ object oriented driver for interfacing with the TC74, and is agnostic to any embedded platform.
 
 ## How to Use
 
-## Use as Git Submodule
+### Use as Git Submodule
 
 1. Add this project as a `git submodule`.
 
